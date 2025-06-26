@@ -317,7 +317,7 @@ export const ContactSection = () => {
                     href="tel:+639127237881"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    +63 912 723 7881
+                    +63 912 72*****81
                   </a>
                 </div>
               </div>
