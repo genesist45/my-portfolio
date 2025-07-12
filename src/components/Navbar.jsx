@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const navItems = [
   { name: "Home", href: "#hero" },
   { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
+  { name: "Tech Stack", href: "#skills" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ];
@@ -67,7 +67,7 @@ export const Navbar = () => {
           >
             <span className="relative">
               <span className="bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent font-extrabold">
-                Personal
+                Clark's
               </span>{" "}
               <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent font-bold">
                 Portfolio

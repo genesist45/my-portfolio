@@ -244,7 +244,7 @@ export const ProjectsSection = () => {
           style={getAnimationStyle(0, "title")}
         >
           <h2 className="text-3xl md:text-4xl font-bold inline-block">
-            Featured <span className="text-primary">Projects</span>
+            Projects & <span className="text-primary">Activities</span>
           </h2>
           <div 
             className="h-1 w-0 bg-gradient-to-r from-primary to-emerald-400 mx-auto mt-2"

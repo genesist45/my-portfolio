@@ -1,9 +1,9 @@
-import { ArrowDown, Github, Linkedin, Twitter, Gitlab } from "lucide-react";
+import { ArrowDown, Github, Linkedin, Twitter, Gitlab, Facebook } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import tempImage from "../assets/example.jpg";
 
-// Enhanced Particle component for visual effect
-const Particle = ({ isHovered }) => {
+// Floating Particle component for a soft, drifting effect
+const FloatingParticle = ({ isHovered }) => {
   const particleRef = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
@@ -30,11 +30,11 @@ const Particle = ({ isHovered }) => {
       
       // Enhanced color palette
       const colors = [
-        'rgba(16, 185, 129, 0.8)', // Primary
-        'rgba(110, 231, 183, 0.8)', // Emerald
-        'rgba(52, 211, 153, 0.8)', // Green
-        'rgba(16, 185, 129, 0.4)', // Primary (transparent)
-        'rgba(255, 255, 255, 0.6)', // White (for sparkle effect)
+        'hsla(var(--primary), 0.8)',      // Primary color from CSS variables
+        'rgba(168, 85, 247, 0.8)',       // Purple-500
+        'rgba(192, 132, 252, 0.8)',      // Purple-400
+        'hsla(var(--primary), 0.4)',      // Primary color (transparent)
+        'rgba(255, 255, 255, 0.6)',       // White (for sparkle effect)
       ];
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
       
@@ -87,6 +87,69 @@ const Particle = ({ isHovered }) => {
   );
 };
 
+// New Sparkle Particle component for a sharp, twinkling effect
+const SparkleParticle = ({ isHovered }) => {
+  const [style, setStyle] = useState({});
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    let sparkleTimeout;
+    let visibilityTimeout;
+
+    const sparkle = () => {
+      setVisible(true);
+      const size = 1 + Math.random() * 2.5;
+      const angle = Math.random() * 360;
+      // Position sparkles more centrally, closer to the image
+      const radius = 40 + Math.random() * 100;
+      
+      const x = Math.cos(angle * Math.PI / 180) * radius;
+      const y = Math.sin(angle * Math.PI / 180) * radius;
+
+      const life = 300 + Math.random() * 700;
+      
+      setStyle({
+        width: `${size}px`,
+        height: `${size}px`,
+        top: '50%',
+        left: '50%',
+        transform: `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${Math.random() * 360}deg)`,
+        backgroundColor: `rgba(255, 255, 224, ${0.7 + Math.random() * 0.3})`, // Light yellow/white
+        boxShadow: '0 0 8px 2px rgba(255, 255, 224, 0.5)',
+        clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
+        transition: `opacity ${life}ms ease-in-out`,
+      });
+
+      visibilityTimeout = setTimeout(() => {
+        setVisible(false);
+      }, life);
+      
+      // Schedule the next sparkle
+      sparkleTimeout = setTimeout(sparkle, life + Math.random() * 500);
+    };
+
+    if (isHovered) {
+      // Start the sparkle loop
+      sparkleTimeout = setTimeout(sparkle, Math.random() * 500);
+    }
+
+    return () => {
+      clearTimeout(sparkleTimeout);
+      clearTimeout(visibilityTimeout);
+    };
+  }, [isHovered]);
+
+  return (
+    <div
+      className="absolute"
+      style={{
+        ...style,
+        opacity: visible ? 1 : 0,
+      }}
+    />
+  );
+};
+
 export const HeroSection = () => {
   const [displayText, setDisplayText] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -94,9 +157,9 @@ export const HeroSection = () => {
   const [rotation, setRotation] = useState(0);
   const [pulseScale, setPulseScale] = useState(1);
   const roles = [
-    "I'm a Aspiring Frontend Developer ",
-    "I'm a Aspiring UX/UI Designer ",
-    "Imma build cool things for the web",
+    "Aspiring Frontend Developer",
+    "UI/UX Designer",
+    "Build Cool Things for the Web  ",
   ];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -128,7 +191,7 @@ export const HeroSection = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 100);
+    }, 1000); // Changed from 100ms to 2000ms (2 seconds)
     return () => clearTimeout(timer);
   }, []);
 
@@ -153,12 +216,12 @@ export const HeroSection = () => {
         if (displayText.length === currentRole.length) {
           timeout = setTimeout(() => {
             setIsDeleting(true);
-          }, 1800); // Wait before starting to delete
+          }, 1000); // Reduced pause before starting to delete (from 1800ms)
           return;
         }
         
-        // Variable typing speed for more natural effect
-        const typingSpeed = Math.random() * 60 + 70; // Between 70ms and 130ms
+        // Faster typing speed for more energetic effect
+        const typingSpeed = Math.random() * 30 + 30; // Between 30ms and 60ms (much faster)
         timeout = setTimeout(type, typingSpeed);
       } else {
         setDisplayText(currentRole.substring(0, displayText.length - 1));
@@ -166,12 +229,12 @@ export const HeroSection = () => {
         if (displayText.length === 0) {
           setIsDeleting(false);
           setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
-          timeout = setTimeout(type, 700); // Pause before typing next phrase
+          timeout = setTimeout(type, 400); // Reduced pause before typing next phrase (from 700ms)
           return;
         }
         
         // Faster deletion speed
-        timeout = setTimeout(type, 40);
+        timeout = setTimeout(type, 20); // Reduced from 40ms
       }
     };
     
@@ -269,7 +332,7 @@ export const HeroSection = () => {
     >
       {/* Animated Intro Overlay */}
       <div className={`fixed inset-0 bg-background z-50 flex items-center justify-center transition-opacity duration-1000 ${isLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-        <div className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-emerald-400 animate-pulse">
+        <div className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500 animate-pulse">
           Welcome to My Portfolio
         </div>
       </div>
@@ -286,7 +349,7 @@ export const HeroSection = () => {
             ref={imageRef}
           >
             <div 
-              className="relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] md:w-[400px] md:h-[400px] bg-[#a3e6ab]/10 flex items-center justify-center transition-transform duration-300 ease-out overflow-hidden rounded-full"
+              className="relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] md:w-[400px] md:h-[400px] bg-primary/10 flex items-center justify-center transition-transform duration-300 ease-out overflow-hidden rounded-full"
               style={{
                 transform: isMobile ? `scale(${pulseScale})` : `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${pulseScale})`,
                 transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -297,20 +360,23 @@ export const HeroSection = () => {
               {/* Particles */}
               {isHovered && (
                 <>
-                  {Array.from({ length: isMobile ? 20 : 25 }).map((_, i) => (
-                    <Particle key={i} isHovered={isHovered} />
+                  {Array.from({ length: isMobile ? 15 : 20 }).map((_, i) => (
+                    <FloatingParticle key={`float-${i}`} isHovered={isHovered} />
+                  ))}
+                  {Array.from({ length: isMobile ? 10 : 15 }).map((_, i) => (
+                    <SparkleParticle key={`sparkle-${i}`} isHovered={isHovered} />
                   ))}
                 </>
               )}
               
               {/* Background gradient effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-emerald-400/20 animate-pulse rounded-full"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-purple-500/20 animate-pulse rounded-full"></div>
               
               {/* Glow effect on hover */}
               <div 
                 className="absolute inset-0 rounded-full transition-opacity duration-500"
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.4) 0%, transparent 70%)',
+                  background: 'radial-gradient(circle at center, hsla(var(--primary), 0.4) 0%, transparent 70%)',
                   opacity: isHovered ? 0.8 : 0,
                   filter: 'blur(15px)',
                 }}
@@ -325,9 +391,9 @@ export const HeroSection = () => {
               <div 
                 className="absolute w-[90%] h-[90%] z-[1] rounded-full"
                 style={{
-                  background: 'linear-gradient(45deg, rgba(16, 185, 129, 0.4), rgba(110, 231, 183, 0.4))',
+                  background: 'linear-gradient(45deg, hsla(var(--primary), 0.4), rgba(168, 85, 247, 0.4))',
                   padding: '8px',
-                  boxShadow: isHovered ? '0 0 20px rgba(16, 185, 129, 0.4)' : 'none',
+                  boxShadow: isHovered ? '0 0 20px hsla(var(--primary), 0.4)' : 'none',
                   transition: 'box-shadow 0.5s ease',
                 }}
               ></div>
@@ -359,48 +425,51 @@ export const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right side - Text content (now above image on mobile) */}
+          {/* Right side - Text content */}
           <div className={`w-full md:w-1/2 text-center md:text-left space-y-6 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-medium mb-4">
-              <span className="text-primary inline-block min-h-[1.5em]">
-                {displayText}
-                <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100 ml-0.5 font-normal`}>|</span>
-              </span>
-            </h2>
-            
             <div className="space-y-2">
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold">
-                Hi, I'm 
+                Hi, I'm
               </h1>
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-emerald-400">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">
                 Genesis Clark
               </h1>
-              <br></br>
-              <p className="text-base md:text-lg">
-                build cool things for the web
+              
+              {/* Completely rebuilt typing animation container for better mobile support */}
+              <div className="mt-2 whitespace-nowrap text-center md:text-left">
+                <span className="text-xl sm:text-2xl md:text-3xl font-medium inline-block">I'm A</span>
+                <span className="text-xl sm:text-2xl md:text-3xl font-medium inline-block bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500 ml-2">
+                  {displayText}
+                  <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100 ml-0.5 font-normal text-primary`}>|</span>
+                </span>
+              </div>
+              
+              <div className="h-4"></div> {/* Added spacing */}
+              <p className="text-base md:text-lg max-w-lg mx-auto md:mx-0">
+                Aspiring frontend developer passionate about clean, responsive apps, also can do backend tasks.
               </p>
             </div>
 
-            <div className="pt-6 md:pt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 sm:space-x-4">
+            <div className="pt-6 md:pt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 sm:gap-6">
               <a 
                 href="#projects" 
                 className="relative inline-flex items-center px-6 py-3 rounded-full bg-primary text-white overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 group w-full sm:w-auto text-center justify-center"
               >
                 <span className="relative z-10">Projects</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
               </a>
-              <div className="flex space-x-3 mt-4 sm:mt-0">
-                <a href="https://github.com/genesist45" className="p-3 rounded-full bg-card hover:bg-primary/20 transition-colors duration-200">
+              <div className="flex space-x-4 mt-4 sm:mt-0">
+                <a href="https://github.com/genesist45" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-card hover:bg-primary/20 transition-colors duration-200">
                   <Github className="h-5 w-5 text-foreground" />
                 </a>
-                <a href="#" className="p-3 rounded-full bg-card hover:bg-primary/20 transition-colors duration-200">
+                <a href="https://gitlab.com/genesist45" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-card hover:bg-primary/20 transition-colors duration-200">
                   <Gitlab className="h-5 w-5 text-foreground" />
                 </a>
-                <a href="#" className="p-3 rounded-full bg-card hover:bg-primary/20 transition-colors duration-200">
+                <a href="https://www.linkedin.com/in/genesis-clark-0ab92836b/" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-card hover:bg-primary/20 transition-colors duration-200">
                   <Linkedin className="h-5 w-5 text-foreground" />
                 </a>
-                <a href="#" className="p-3 rounded-full bg-card hover:bg-primary/20 transition-colors duration-200">
-                  <Twitter className="h-5 w-5 text-foreground" />
+                <a href="https://www.facebook.com/clark.genesis.9400" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-card hover:bg-primary/20 transition-colors duration-200">
+                  <Facebook className="h-5 w-5 text-foreground" />
                 </a>
               </div>
             </div>
@@ -408,7 +477,7 @@ export const HeroSection = () => {
         </div>
       </div>
       <div className={`absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full filter blur-3xl transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}></div>
-      <div className={`absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-400/5 rounded-full filter blur-3xl transition-all duration-1000 delay-700 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}></div>
+      <div className={`absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/5 rounded-full filter blur-3xl transition-all duration-1000 delay-700 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}></div>
     </section>
   );
 };

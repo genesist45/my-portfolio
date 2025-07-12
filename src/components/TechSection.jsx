@@ -5,25 +5,25 @@ const skills = [
   // Frontend
   { name: "HTML/CSS", level: 50, category: "frontend" },
   { name: "JavaScript", level: 40, category: "frontend" },
-  { name: "React", level: 25, category: "frontend" },
-  { name: "TypeScript", level: 10, category: "frontend" },
-  { name: "Tailwind CSS", level: 10, category: "frontend" },
+  { name: "React", level: 30 , category: "frontend" },
+  { name: "TypeScript", level: 20, category: "frontend" },
+  { name: "Tailwind CSS", level: 20, category: "frontend" },
 
   // Backend
-  { name: "Laravel", level: 15, category: "backend" },
-  { name: "Next.js", level: 0, category: "backend" },
-  { name: "MongoDB", level: 0, category: "backend" },
-  { name: "PostgreSQL", level: 0, category: "backend" },
+  { name: "Laravel", level: 25, category: "backend" },
+  { name: "Next.js", level: 15, category: "backend" },
+  { name: "MySQL", level: 10, category: "backend" },
 
   // Tools
-  { name: "Git/GitHub", level: 30, category: "tools" },
+  { name: "Git/GitHub", level: 40, category: "tools" },
   { name: "Canva", level: 70, category: "tools" },
-  { name: "VS Code", level: 30, category: "tools" },
+  { name: "Figma", level: 20, category: "tools" },
+  { name: "VS Code", level: 50, category: "tools" },
 ];
 
 const categories = ["all", "frontend", "backend", "tools"];
 
-export const SkillsSection = () => {
+export const TechSection = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [isVisible, setIsVisible] = useState(false);
   const [animationProgress, setAnimationProgress] = useState(0);
@@ -283,7 +283,7 @@ export const SkillsSection = () => {
           style={getAnimationStyle(0, "title")}
         >
           <h2 className="text-3xl md:text-4xl font-bold inline-block">
-            My <span className="text-primary">Skills</span>
+            Tech <span className="text-primary">Stack</span>
           </h2>
           <div 
             className="h-1 w-0 bg-gradient-to-r from-primary to-emerald-400 mx-auto mt-2"

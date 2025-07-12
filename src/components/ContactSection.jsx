@@ -6,7 +6,6 @@ import {
   MapPin,
   Phone,
   Send,
-  Twitch,
   Twitter,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -22,6 +21,21 @@ export const ContactSection = () => {
   const [isLeaving, setIsLeaving] = useState(false);
   const sectionRef = useRef(null);
   const animationRef = useRef(null);
+  
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  // Handle form input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   // Handle intro animation
   useEffect(() => {
@@ -110,7 +124,7 @@ export const ContactSection = () => {
     animationRef.current = requestAnimationFrame(animate);
   };
 
-  // Calculate animation states for different elements
+  // Calculate animation styles for different elements
   const getAnimationStyle = (index, type = "default") => {
     // Base delay for staggered animations
     const delay = index * 80; // 80ms between each element
@@ -240,18 +254,58 @@ export const ContactSection = () => {
     };
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Please fill in all fields",
+        description: "All fields are required to submit the form.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
+    try {
+      // Replace this URL with your actual Formspree form ID
+      const response = await fetch("https://formspree.io/f/xrbknnpd", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message
+        }),
       });
+
+      if (response.ok) {
+        toast({
+          title: "Message sent!",
+          description: "Thank you for your message. I'll get back to you soon.",
+        });
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          message: ''
+        });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      toast({
+        title: "Failed to send message",
+        description: "There was a problem sending your message. Please try again later.",
+        variant: "destructive",
+      });
+      console.error("Error sending message:", error);
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
   
   return (
@@ -266,7 +320,7 @@ export const ContactSection = () => {
           style={getAnimationStyle(0, "title")}
         >
           <h2 className="text-3xl md:text-4xl font-bold inline-block">
-            Get In <span className="text-primary">Touch</span>
+            Contact <span className="text-primary">Me</span>
           </h2>
           <div 
             className="h-1 w-0 bg-gradient-to-r from-primary to-emerald-400 mx-auto mt-2"
@@ -278,8 +332,7 @@ export const ContactSection = () => {
           className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto opacity-0"
           style={getAnimationStyle(0, "paragraph")}
         >
-          Have a project in mind or want to collaborate? Feel free to reach out.
-          I'm always open to discussing new opportunities.
+          I'd love to hear from you!
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -341,7 +394,7 @@ export const ContactSection = () => {
               className="pt-8 opacity-0" 
               style={getAnimationStyle(3, "contact-item")}
             >
-              <h4 className="font-medium mb-4">Connect With Me</h4>
+              <h4 className="font-medium mb-4">Find Me</h4>
               <div className="flex space-x-4 justify-center">
                 <a 
                   href="https://www.facebook.com/clark.genesis.9400" 
@@ -351,7 +404,11 @@ export const ContactSection = () => {
                 >
                   <Facebook className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
                 </a>
-                <a href="#" target="_blank">
+                <a 
+                  href="https://www.linkedin.com/in/genesis-clark-0ab92836b/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
                 </a>
                 <a href="#" target="_blank">
@@ -367,11 +424,10 @@ export const ContactSection = () => {
           <div
             className="bg-card p-8 rounded-lg shadow-xs opacity-0"
             style={getAnimationStyle(1, "card")}
-            onSubmit={handleSubmit}
           >
             <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div 
                 className="opacity-0"
                 style={getAnimationStyle(0, "form-element")}
@@ -383,9 +439,11 @@ export const ContactSection = () => {
                   type="text"
                   id="name"
                   name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
-                  placeholder="Enter your name..."
+                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary"
+                  placeholder="Your name..."
                 />
               </div>
 
@@ -400,9 +458,11 @@ export const ContactSection = () => {
                   type="email"
                   id="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
-                  placeholder="Enter your email..."
+                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary"
+                  placeholder="Your email address..."
                 />
               </div>
 
@@ -419,9 +479,11 @@ export const ContactSection = () => {
                 <textarea
                   id="message"
                   name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   required
                   rows={4}
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary resize-none"
+                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary resize-none"
                   placeholder="Hello, I'd like to talk about..."
                 />
               </div>

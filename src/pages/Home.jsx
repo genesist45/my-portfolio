@@ -3,7 +3,7 @@ import { ThemeToggle } from "../components/ThemeToggle";
 import { StarBackground } from "@/components/StarBackground";
 import { HeroSection } from "../components/HeroSection";
 import { AboutSection } from "../components/AboutSection";
-import { SkillsSection } from "../components/SkillsSection";
+import { TechSection } from "../components/TechSection";
 import { ProjectsSection } from "../components/ProjectsSection";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
@@ -33,7 +33,7 @@ export const Home = () => {
         </section>
         
         <section className="my-8">
-          <SkillsSection />
+          <TechSection />
         </section>
         
         <section className="my-8">

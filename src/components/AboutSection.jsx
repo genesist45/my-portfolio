@@ -329,7 +329,7 @@ export const AboutSection = () => {
                 className="cosmic-button opacity-0"
                 style={getAnimationStyle(0, "button")}
               >
-                Get In Touch
+                Connect With Me
               </a>
 
               <a
