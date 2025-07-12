@@ -3,28 +3,46 @@ import { ThemeToggle } from "../components/ThemeToggle";
 import { StarBackground } from "@/components/StarBackground";
 import { HeroSection } from "../components/HeroSection";
 import { AboutSection } from "../components/AboutSection";
-import { SkillsSection } from "../components/SkillsSection";
+import { TechSection } from "../components/TechSection";
 import { ProjectsSection } from "../components/ProjectsSection";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
 
 export const Home = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
       {/* Theme Toggle */}
       <ThemeToggle />
+      
       {/* Background Effects */}
       <StarBackground />
 
       {/* Navbar */}
-      <Navbar />
+      <div className="sticky top-0 z-40">
+        <Navbar />
+      </div>
+      
       {/* Main Content */}
-      <main>
-        <HeroSection />
-        <AboutSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <ContactSection />
+      <main className="relative z-10">
+        <section>
+          <HeroSection />
+        </section>
+        
+        <section className="my-8">
+          <AboutSection />
+        </section>
+        
+        <section className="my-8">
+          <TechSection />
+        </section>
+        
+        <section className="my-8">
+          <ProjectsSection />
+        </section>
+        
+        <section className="my-8">
+          <ContactSection />
+        </section>
       </main>
 
       {/* Footer */}

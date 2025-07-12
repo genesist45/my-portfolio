@@ -20,6 +20,7 @@
   --animate-meteor: meteor 5s linear infinite;
   --animate-glow: glow 4s ease-in-out infinite;
   --animate-grid-flow: grid-flow 20s linear infinite;
+  --animate-shine: shine 1.5s forwards;
 
   @keyframes float {
     0%,
@@ -78,6 +79,47 @@
     }
     100% {
       transform: translateY(-100%) translateX(-100%);
+    }
+  }
+  @keyframes shine {
+    0% {
+      transform: translateX(-100%) skewX(-12deg);
+    }
+    100% {
+      transform: translateX(200%) skewX(-12deg);
+    }
+  }
+  
+  /* Skill bar animation */
+  @keyframes grow {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  
+  @keyframes pulse {
+    0% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0.2;
+    }
+  }
+  
+  @keyframes number-count {
+    0% {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
@@ -187,6 +229,26 @@
     linear-gradient(to right, hsl(var(--primary) / 0.1) 1px, transparent 1px),
     linear-gradient(to bottom, hsl(var(--primary) / 0.1) 1px, transparent 1px);
   mask-image: radial-gradient(circle at center, black, transparent 80%);
+}
+
+/* Modern glass card effect */
+@utility glass-card {
+  @apply backdrop-blur-md rounded-xl border border-white/10 shadow-xl;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+}
+
+/* Dark mode glass card */
+.dark .glass-card {
+  @apply border-slate-800/50;
+  background: linear-gradient(
+    to bottom right,
+    rgba(30, 41, 59, 0.5),
+    rgba(15, 23, 42, 0.7)
+  );
 }
 
 #root {
