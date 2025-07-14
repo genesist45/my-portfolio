@@ -159,7 +159,7 @@ export const HeroSection = () => {
   const roles = [
     "Aspiring Frontend Developer",
     "UI/UX Designer",
-    "Build Cool Things for the Web  ",
+    "Problem Solver",
   ];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -337,11 +337,11 @@ export const HeroSection = () => {
         </div>
       </div>
       
-      <div className="container max-w-6xl mx-auto z-10">
-        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8">
+      <div className="container max-w-6xl mx-auto z-10 px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-center md:justify-between gap-8 md:gap-12">
           {/* Left side - Illustration (now below text on mobile) */}
           <div 
-            className={`w-full md:w-1/2 flex justify-center perspective-1000 transition-all duration-1000 mt-8 md:mt-0 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}
+            className={`w-full md:w-1/2 flex justify-center items-center perspective-1000 transition-all duration-1000 mt-8 md:mt-0 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onTouchStart={handleTouchStart}
@@ -427,18 +427,18 @@ export const HeroSection = () => {
 
           {/* Right side - Text content */}
           <div className={`w-full md:w-1/2 text-center md:text-left space-y-6 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-            <div className="space-y-2">
-              <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold">
+            <div className="space-y-4 sm:space-y-2">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mx-auto md:mx-0">
                 Hi, I'm
               </h1>
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500 mx-auto md:mx-0">
                 Genesis Clark
               </h1>
               
               {/* Completely rebuilt typing animation container for better mobile support */}
-              <div className="mt-2 whitespace-nowrap text-center md:text-left">
-                <span className="text-xl sm:text-2xl md:text-3xl font-medium inline-block">I'm A</span>
-                <span className="text-xl sm:text-2xl md:text-3xl font-medium inline-block bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500 ml-2">
+              <div className="mt-2 whitespace-nowrap text-center md:text-left flex flex-wrap justify-center md:justify-start items-center gap-2">
+                <span className="text-xl sm:text-2xl md:text-3xl font-medium">I'm A</span>
+                <span className="text-xl sm:text-2xl md:text-3xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">
                   {displayText}
                   <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100 ml-0.5 font-normal text-primary`}>|</span>
                 </span>
@@ -450,10 +450,10 @@ export const HeroSection = () => {
               </p>
             </div>
 
-            <div className="pt-6 md:pt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 sm:gap-6">
+            <div className="pt-6 md:pt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 sm:gap-6 w-full sm:w-auto">
               <a 
                 href="#projects" 
-                className="relative inline-flex items-center px-6 py-3 rounded-full bg-primary text-white overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 group w-full sm:w-auto text-center justify-center"
+                className="relative inline-flex items-center px-6 py-3 rounded-full bg-primary text-white overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 group w-[200px] sm:w-auto text-center justify-center"
               >
                 <span className="relative z-10">Projects</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>

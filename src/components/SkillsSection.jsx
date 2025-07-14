@@ -3,27 +3,87 @@ import { cn } from "@/lib/utils";
 
 const skills = [
   // Frontend
-  { name: "HTML/CSS", level: 50, category: "frontend" },
-  { name: "JavaScript", level: 40, category: "frontend" },
-  { name: "React", level: 30 , category: "frontend" },
-  { name: "TypeScript", level: 20, category: "frontend" },
-  { name: "Tailwind CSS", level: 20, category: "frontend" },
+  { 
+    name: "HTML/CSS", 
+    level: 50, 
+    category: "frontend",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+  },
+  { 
+    name: "JavaScript", 
+    level: 40, 
+    category: "frontend",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+  },
+  { 
+    name: "React", 
+    level: 30, 
+    category: "frontend",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+  },
+  { 
+    name: "TypeScript", 
+    level: 20, 
+    category: "frontend",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+  },
+  { 
+    name: "Tailwind CSS", 
+    level: 20, 
+    category: "frontend",
+    icon: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg"
+  },
 
   // Backend
-  { name: "Laravel", level: 25, category: "backend" },
-  { name: "Next.js", level: 15, category: "backend" },
-  { name: "MySQL", level: 10, category: "backend" },
+  { 
+    name: "Laravel", 
+    level: 25, 
+    category: "backend",
+    icon: "https://cdn.worldvectorlogo.com/logos/laravel-2.svg"
+  },
+  { 
+    name: "Next.js", 
+    level: 15, 
+    category: "backend",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+  },
+  { 
+    name: "MySQL", 
+    level: 10, 
+    category: "backend",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+  },
 
   // Tools
-  { name: "Git/GitHub", level: 40, category: "tools" },
-  { name: "Canva", level: 70, category: "tools" },
-  { name: "Figma", level: 20, category: "tools" },
-  { name: "VS Code", level: 50, category: "tools" },
+  { 
+    name: "Git/GitHub", 
+    level: 40, 
+    category: "tools",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+  },
+  { 
+    name: "Canva", 
+    level: 70, 
+    category: "tools",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg"
+  },
+  { 
+    name: "Figma", 
+    level: 20, 
+    category: "tools",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+  },
+  { 
+    name: "VS Code", 
+    level: 50, 
+    category: "tools",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
+  },
 ];
 
 const categories = ["all", "frontend", "backend", "tools"];
 
-export const TechSection = () => {
+export const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [isVisible, setIsVisible] = useState(false);
   const [animationProgress, setAnimationProgress] = useState(0);
@@ -283,7 +343,7 @@ export const TechSection = () => {
           style={getAnimationStyle(0, "title")}
         >
           <h2 className="text-3xl md:text-4xl font-bold inline-block">
-            Tech <span className="text-primary">Stack</span>
+            My <span className="text-primary">Skills</span>
           </h2>
           <div 
             className="h-1 w-0 bg-gradient-to-r from-primary to-emerald-400 mx-auto mt-2"
@@ -316,7 +376,14 @@ export const TechSection = () => {
               className="bg-card p-6 rounded-lg shadow-xs card-hover opacity-0"
               style={getAnimationStyle(index, "card")}
             >
-              <div className="text-left mb-4">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-white/5 p-1.5 flex items-center justify-center">
+                  <img
+                    src={skill.icon}
+                    alt={skill.name}
+                    className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+                  />
+                </div>
                 <h3 className="font-semibold text-lg">{skill.name}</h3>
               </div>
               <div className="w-full bg-secondary/50 h-2 rounded-full overflow-hidden">
